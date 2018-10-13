@@ -4372,7 +4372,14 @@ var elm$core$Set$toList = function (_n0) {
 	return elm$core$Dict$keys(dict);
 };
 var elm$core$Basics$append = _Utils_append;
-var author$project$Picshare$initialModel = {caption: 'Surfing', liked: false, url: author$project$Picshare$baseUrl + '1.jpg'};
+var author$project$Picshare$initialModel = {
+	caption: 'Surfing',
+	comments: _List_fromArray(
+		['Cowabunga, dude!']),
+	liked: false,
+	newComment: '',
+	url: author$project$Picshare$baseUrl + '1.jpg'
+};
 var elm$core$Basics$not = _Basics_not;
 var author$project$Picshare$update = F2(
 	function (msg, model) {
@@ -4380,7 +4387,6 @@ var author$project$Picshare$update = F2(
 			model,
 			{liked: !model.liked});
 	});
-var author$project$Picshare$ToggleLike = {$: 'ToggleLike'};
 var elm$core$Basics$identity = function (x) {
 	return x;
 };
@@ -4792,166 +4798,26 @@ var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 			return 3;
 	}
 };
-var elm$html$Html$div = _VirtualDom_node('div');
-var elm$html$Html$i = _VirtualDom_node('i');
-var elm$json$Json$Encode$string = _Json_wrap;
-var elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			elm$json$Json$Encode$string(string));
-	});
-var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
-var elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			elm$virtual_dom$VirtualDom$on,
-			event,
-			elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		elm$html$Html$Events$on,
-		'click',
-		elm$json$Json$Decode$succeed(msg));
-};
-var author$project$Picshare$viewLoveButton = function (model) {
-	var buttonClass = model.liked ? 'fa-heart' : 'fa-heart-o';
-	return A2(
-		elm$html$Html$div,
-		_List_fromArray(
-			[
-				elm$html$Html$Attributes$class('like-button')
-			]),
-		_List_fromArray(
-			[
-				A2(
-				elm$html$Html$i,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$class('fa fa-2x'),
-						elm$html$Html$Attributes$class(buttonClass),
-						elm$html$Html$Events$onClick(author$project$Picshare$ToggleLike)
-					]),
-				_List_Nil)
-			]));
-};
-var elm$html$Html$h2 = _VirtualDom_node('h2');
-var elm$html$Html$img = _VirtualDom_node('img');
+var elm$html$Html$li = _VirtualDom_node('li');
+var elm$html$Html$strong = _VirtualDom_node('strong');
 var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$html$Html$text = elm$virtual_dom$VirtualDom$text;
-var elm$html$Html$Attributes$src = function (url) {
+var author$project$Picshare$viewComment = function (comment) {
 	return A2(
-		elm$html$Html$Attributes$stringProperty,
-		'src',
-		_VirtualDom_noJavaScriptOrHtmlUri(url));
-};
-var author$project$Picshare$viewDetailedPhoto = function (model) {
-	var buttonClass = model.liked ? 'fa-heart' : 'fa-heart-o';
-	return A2(
-		elm$html$Html$div,
-		_List_fromArray(
-			[
-				elm$html$Html$Attributes$class('detailed-photo')
-			]),
-		_List_fromArray(
-			[
-				A2(
-				elm$html$Html$img,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$src(model.url)
-					]),
-				_List_Nil),
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$class('photo-info')
-					]),
-				_List_fromArray(
-					[
-						author$project$Picshare$viewLoveButton(model),
-						A2(
-						elm$html$Html$h2,
-						_List_fromArray(
-							[
-								elm$html$Html$Attributes$class('caption')
-							]),
-						_List_fromArray(
-							[
-								elm$html$Html$text(model.caption)
-							]))
-					]))
-			]));
-};
-var elm$html$Html$h1 = _VirtualDom_node('h1');
-var author$project$Picshare$view = function (model) {
-	return A2(
-		elm$html$Html$div,
+		elm$html$Html$li,
 		_List_Nil,
 		_List_fromArray(
 			[
 				A2(
-				elm$html$Html$div,
+				elm$html$Html$strong,
+				_List_Nil,
 				_List_fromArray(
 					[
-						elm$html$Html$Attributes$class('header')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						elm$html$Html$h1,
-						_List_Nil,
-						_List_fromArray(
-							[
-								elm$html$Html$text('Picshare')
-							]))
+						elm$html$Html$text('Comment: ')
 					])),
-				A2(
-				elm$html$Html$div,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$class('content-flow')
-					]),
-				_List_fromArray(
-					[
-						author$project$Picshare$viewDetailedPhoto(model)
-					]))
+				elm$html$Html$text(' ' + comment)
 			]));
 };
-var elm$core$Platform$Cmd$batch = _Platform_batch;
-var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
-var elm$core$Platform$Sub$batch = _Platform_batch;
-var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
-var elm$browser$Browser$External = function (a) {
-	return {$: 'External', a: a};
-};
-var elm$browser$Browser$Internal = function (a) {
-	return {$: 'Internal', a: a};
-};
-var elm$browser$Browser$Dom$NotFound = function (a) {
-	return {$: 'NotFound', a: a};
-};
-var elm$core$Basics$never = function (_n0) {
-	never:
-	while (true) {
-		var nvr = _n0.a;
-		var $temp$_n0 = nvr;
-		_n0 = $temp$_n0;
-		continue never;
-	}
-};
-var elm$core$Task$Perform = function (a) {
-	return {$: 'Perform', a: a};
-};
-var elm$core$Task$succeed = _Scheduler_succeed;
-var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
 var elm$core$List$foldrHelper = F4(
 	function (fn, acc, ctr, ls) {
 		if (!ls.b) {
@@ -5021,6 +4887,224 @@ var elm$core$List$map = F2(
 			_List_Nil,
 			xs);
 	});
+var elm$html$Html$div = _VirtualDom_node('div');
+var elm$html$Html$ul = _VirtualDom_node('ul');
+var elm$json$Json$Encode$string = _Json_wrap;
+var elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			elm$json$Json$Encode$string(string));
+	});
+var elm$html$Html$Attributes$class = elm$html$Html$Attributes$stringProperty('className');
+var author$project$Picshare$viewCommentList = function (comments) {
+	if (!comments.b) {
+		return elm$html$Html$text('');
+	} else {
+		return A2(
+			elm$html$Html$div,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$class('comments')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					elm$html$Html$ul,
+					_List_Nil,
+					A2(elm$core$List$map, author$project$Picshare$viewComment, comments))
+				]));
+	}
+};
+var elm$html$Html$button = _VirtualDom_node('button');
+var elm$html$Html$form = _VirtualDom_node('form');
+var elm$html$Html$input = _VirtualDom_node('input');
+var elm$html$Html$Attributes$placeholder = elm$html$Html$Attributes$stringProperty('placeholder');
+var elm$html$Html$Attributes$type_ = elm$html$Html$Attributes$stringProperty('type');
+var author$project$Picshare$viewComments = function (model) {
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				author$project$Picshare$viewCommentList(model.comments),
+				A2(
+				elm$html$Html$form,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('new-comment')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						elm$html$Html$input,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$type_('text'),
+								elm$html$Html$Attributes$placeholder('Add a comment...')
+							]),
+						_List_Nil),
+						A2(
+						elm$html$Html$button,
+						_List_Nil,
+						_List_fromArray(
+							[
+								elm$html$Html$text('Save')
+							]))
+					]))
+			]));
+};
+var author$project$Picshare$ToggleLike = {$: 'ToggleLike'};
+var elm$html$Html$i = _VirtualDom_node('i');
+var elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 'Normal', a: a};
+};
+var elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			elm$virtual_dom$VirtualDom$on,
+			event,
+			elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
+var elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		elm$html$Html$Events$on,
+		'click',
+		elm$json$Json$Decode$succeed(msg));
+};
+var author$project$Picshare$viewLoveButton = function (model) {
+	var buttonClass = model.liked ? 'fa-heart' : 'fa-heart-o';
+	return A2(
+		elm$html$Html$div,
+		_List_fromArray(
+			[
+				elm$html$Html$Attributes$class('like-button')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$i,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('fa fa-2x'),
+						elm$html$Html$Attributes$class(buttonClass),
+						elm$html$Html$Events$onClick(author$project$Picshare$ToggleLike)
+					]),
+				_List_Nil)
+			]));
+};
+var elm$html$Html$h2 = _VirtualDom_node('h2');
+var elm$html$Html$img = _VirtualDom_node('img');
+var elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var author$project$Picshare$viewDetailedPhoto = function (model) {
+	var buttonClass = model.liked ? 'fa-heart' : 'fa-heart-o';
+	return A2(
+		elm$html$Html$div,
+		_List_fromArray(
+			[
+				elm$html$Html$Attributes$class('detailed-photo')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$img,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$src(model.url)
+					]),
+				_List_Nil),
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('photo-info')
+					]),
+				_List_fromArray(
+					[
+						author$project$Picshare$viewLoveButton(model),
+						A2(
+						elm$html$Html$h2,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$class('caption')
+							]),
+						_List_fromArray(
+							[
+								elm$html$Html$text(model.caption)
+							])),
+						author$project$Picshare$viewComments(model)
+					]))
+			]));
+};
+var elm$html$Html$h1 = _VirtualDom_node('h1');
+var author$project$Picshare$view = function (model) {
+	return A2(
+		elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('header')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						elm$html$Html$h1,
+						_List_Nil,
+						_List_fromArray(
+							[
+								elm$html$Html$text('Picshare')
+							]))
+					])),
+				A2(
+				elm$html$Html$div,
+				_List_fromArray(
+					[
+						elm$html$Html$Attributes$class('content-flow')
+					]),
+				_List_fromArray(
+					[
+						author$project$Picshare$viewDetailedPhoto(model)
+					]))
+			]));
+};
+var elm$core$Platform$Cmd$batch = _Platform_batch;
+var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
+var elm$core$Platform$Sub$batch = _Platform_batch;
+var elm$core$Platform$Sub$none = elm$core$Platform$Sub$batch(_List_Nil);
+var elm$browser$Browser$External = function (a) {
+	return {$: 'External', a: a};
+};
+var elm$browser$Browser$Internal = function (a) {
+	return {$: 'Internal', a: a};
+};
+var elm$browser$Browser$Dom$NotFound = function (a) {
+	return {$: 'NotFound', a: a};
+};
+var elm$core$Basics$never = function (_n0) {
+	never:
+	while (true) {
+		var nvr = _n0.a;
+		var $temp$_n0 = nvr;
+		_n0 = $temp$_n0;
+		continue never;
+	}
+};
+var elm$core$Task$Perform = function (a) {
+	return {$: 'Perform', a: a};
+};
+var elm$core$Task$succeed = _Scheduler_succeed;
+var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
 var elm$core$Task$andThen = _Scheduler_andThen;
 var elm$core$Task$map = F2(
 	function (func, taskA) {
