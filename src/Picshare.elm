@@ -12,14 +12,7 @@ import Json.Decode.Pipeline exposing (hardcoded, required)
 initialModel : Model
 initialModel =
     { photo =
-        Just
-            { id = 1
-            , url = baseUrl ++ "1.jpg"
-            , caption = "Surfing"
-            , liked = False
-            , comments = [ "Cowabunga, dude!" ]
-            , newComment = ""
-            }
+        Nothing
     }
 
 
@@ -226,10 +219,13 @@ update msg model =
             , Cmd.none
             )
 
-        LoadFeed _ ->
-            ( model
+        LoadFeed (Ok photo) ->
+            ( { model | photo = Just photo }
             , Cmd.none
             )
+
+        LoadFeed (Err _) ->
+            ( model, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
@@ -244,7 +240,8 @@ viewFeed maybePhoto =
             viewDetailedPhoto photo
 
         Nothing ->
-            text ""
+            div [ class "loading-feed" ]
+                [ text "Loading Feed..." ]
 
 
 view : Model -> Html Msg

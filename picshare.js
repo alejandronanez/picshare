@@ -5773,18 +5773,7 @@ var author$project$Picshare$fetchFeed = A2(
 	elm$http$Http$send,
 	author$project$Picshare$LoadFeed,
 	A2(elm$http$Http$get, author$project$Picshare$baseUrl + 'feed/1', author$project$Picshare$photoDecoder));
-var author$project$Picshare$initialModel = {
-	photo: elm$core$Maybe$Just(
-		{
-			caption: 'Surfing',
-			comments: _List_fromArray(
-				['Cowabunga, dude!']),
-			id: 1,
-			liked: false,
-			newComment: '',
-			url: author$project$Picshare$baseUrl + '1.jpg'
-		})
-};
+var author$project$Picshare$initialModel = {photo: elm$core$Maybe$Nothing};
 var author$project$Picshare$init = function (_n0) {
 	return _Utils_Tuple2(author$project$Picshare$initialModel, author$project$Picshare$fetchFeed);
 };
@@ -5870,7 +5859,18 @@ var author$project$Picshare$update = F2(
 						}),
 					elm$core$Platform$Cmd$none);
 			default:
-				return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
+				if (msg.a.$ === 'Ok') {
+					var photo = msg.a.a;
+					return _Utils_Tuple2(
+						_Utils_update(
+							model,
+							{
+								photo: elm$core$Maybe$Just(photo)
+							}),
+						elm$core$Platform$Cmd$none);
+				} else {
+					return _Utils_Tuple2(model, elm$core$Platform$Cmd$none);
+				}
 		}
 	});
 var author$project$Picshare$SaveComment = {$: 'SaveComment'};
@@ -6144,7 +6144,16 @@ var author$project$Picshare$viewFeed = function (maybePhoto) {
 		var photo = maybePhoto.a;
 		return author$project$Picshare$viewDetailedPhoto(photo);
 	} else {
-		return elm$html$Html$text('');
+		return A2(
+			elm$html$Html$div,
+			_List_fromArray(
+				[
+					elm$html$Html$Attributes$class('loading-feed')
+				]),
+			_List_fromArray(
+				[
+					elm$html$Html$text('Loading Feed...')
+				]));
 	}
 };
 var elm$html$Html$h1 = _VirtualDom_node('h1');
